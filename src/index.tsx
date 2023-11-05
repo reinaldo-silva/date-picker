@@ -1,3 +1,5 @@
+import '../tailwind.css';
+
 import React, { ComponentProps, ReactNode } from 'react';
 
 export interface Props extends ComponentProps<'div'> {

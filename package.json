@@ -1,11 +1,15 @@
 {
-  "version": "0.0.2",
+  "version": "0.1.6",
   "license": "ISC",
-  "name": "@dev-box/date-picker",
+  "name": "date-picker-tailwind",
   "author": "Reinaldo Silva",
   "module": "dist/dev-box.esm.js",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/reinaldo-silva/dev-box.git"
+  },
   "private": false,
   "files": [
     "dist",
@@ -22,7 +26,6 @@
     "build": "tsdx build && yarn build-tailwind",
     "test": "tsdx test --passWithNoTests",
     "lint": "tsdx lint",
-    "prepare": "tsdx build",
     "size": "size-limit",
     "analyze": "size-limit --why",
     "storybook": "storybook dev",
