@@ -1,0 +1,87 @@
+{
+  "version": "0.0.2",
+  "license": "ISC",
+  "name": "@dev-box/date-picker",
+  "author": "Reinaldo Silva",
+  "module": "dist/dev-box.esm.js",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "private": false,
+  "files": [
+    "dist",
+    "src"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build && yarn build-tailwind",
+    "test": "tsdx test --passWithNoTests",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build",
+    "size": "size-limit",
+    "analyze": "size-limit --why",
+    "storybook": "storybook dev",
+    "build-storybook": "storybook build",
+    "build-tailwind": "npx tailwindcss -o ./dist/styles.css --minify"
+  },
+  "peerDependencies": {
+    "react": ">=16"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "size-limit": [
+    {
+      "path": "dist/dev-box.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/dev-box.esm.js",
+      "limit": "10 KB"
+    }
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.23.2",
+    "@babel/preset-env": "^7.23.2",
+    "@babel/preset-react": "^7.22.15",
+    "@babel/preset-typescript": "^7.23.2",
+    "@size-limit/preset-small-lib": "^10.0.2",
+    "@storybook/addon-essentials": "^7.5.2",
+    "@storybook/addon-info": "^4.1.18",
+    "@storybook/addon-links": "^7.5.2",
+    "@storybook/addon-postcss": "^2.0.0",
+    "@storybook/addons": "^7.5.2",
+    "@storybook/cli": "^7.5.2",
+    "@storybook/ember": "^5.3.9",
+    "@storybook/react": "^7.5.2",
+    "@storybook/react-webpack5": "^7.5.2",
+    "@types/react": "^18.2.34",
+    "@types/react-dom": "^18.2.14",
+    "autoprefixer": "^10.4.16",
+    "babel-loader": "^9.1.3",
+    "husky": "^8.0.3",
+    "postcss": "^8.4.31",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-is": "^18.2.0",
+    "size-limit": "^10.0.2",
+    "storybook": "next",
+    "tailwindcss": "^3.3.5",
+    "tsdx": "^0.13.3",
+    "tslib": "^2.6.2",
+    "typescript": "^5.2.2"
+  }
+}
