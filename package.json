@@ -1,7 +1,7 @@
 {
   "version": "0.1.6",
   "license": "ISC",
-  "name": "date-picker-tailwind",
+  "name": "@reinaldo-silva/date-picker",
   "author": "Reinaldo Silva",
   "module": "dist/dev-box.esm.js",
   "main": "dist/index.js",
