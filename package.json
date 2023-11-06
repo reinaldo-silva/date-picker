@@ -33,7 +33,12 @@
     "build-tailwind": "npx tailwindcss -o ./dist/styles.css --minify"
   },
   "peerDependencies": {
-    "react": ">=16"
+    "clsx": "^2.0.0",
+    "date-fns": "^2.30.0",
+    "framer-motion": "^10.16.4",
+    "lucide-react": "^0.292.0",
+    "react": ">=16",
+    "tailwind-scrollbar-hide": "^1.1.7"
   },
   "husky": {
     "hooks": {
@@ -63,12 +68,11 @@
     "@babel/preset-typescript": "^7.23.2",
     "@size-limit/preset-small-lib": "^10.0.2",
     "@storybook/addon-essentials": "^7.5.2",
-    "@storybook/addon-info": "^4.1.18",
     "@storybook/addon-links": "^7.5.2",
     "@storybook/addon-postcss": "^2.0.0",
     "@storybook/addons": "^7.5.2",
     "@storybook/cli": "^7.5.2",
-    "@storybook/ember": "^5.3.9",
+    "@storybook/ember": "^7.5.2",
     "@storybook/react": "^7.5.2",
     "@storybook/react-webpack5": "^7.5.2",
     "@types/react": "^18.2.34",
@@ -83,7 +87,7 @@
     "size-limit": "^10.0.2",
     "storybook": "next",
     "tailwindcss": "^3.3.5",
-    "tsdx": "^0.13.3",
+    "tsdx": "^0.14.1",
     "tslib": "^2.6.2",
     "typescript": "^5.2.2"
   }

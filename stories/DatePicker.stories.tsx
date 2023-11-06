@@ -1,17 +1,11 @@
 import { Meta } from '@storybook/react';
 import React from 'react';
-import { Props, Thing } from '../src';
+import { DatePicker, DatePickerProps } from '../src';
 
 const meta: Meta = {
-  title: 'Welcome',
-  component: Thing,
-  argTypes: {
-    children: {
-      control: {
-        type: 'text',
-      },
-    },
-  },
+  title: 'Date Picker',
+  component: DatePicker,
+  argTypes: {},
   parameters: {
     controls: { expanded: true },
   },
@@ -19,7 +13,9 @@ const meta: Meta = {
 
 export default meta;
 
-const Template = (args: Props) => <Thing {...args} />;
+const Template = (args: DatePickerProps) => (
+  <DatePicker {...args} setValue={() => {}} />
+);
 
 export const Default = Template.bind({});
 

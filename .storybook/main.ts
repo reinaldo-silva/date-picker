@@ -7,34 +7,33 @@ const config = {
       name: '@storybook/addon-postcss',
       options: {
         postcssLoaderOptions: {
-          implementation: require("postcss") ,
+          implementation: require('postcss'),
         },
       },
     },
   ],
 
-  // https://storybook.js.org/docs/react/configure/typescript#mainjs-configuration
   typescript: {
-    check: true, // type-check stories during Storybook build
+    check: true,
   },
 
   docs: {
-    autodocs: true
+    autodocs: true,
   },
 
   framework: {
     name: '@storybook/react-webpack5',
-    options: {}
-  }
+    options: {},
+  },
 };
 
 export const framework = {
   name: '@storybook/react-webpack5',
-  options: {}
+  options: {},
 };
 
 export const docs = {
-  autodocs: true
+  autodocs: true,
 };
 
-export default config
+export default config;

@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-div {
-  @apply bg-red-400;
+input::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+input[type='date']::-webkit-input-placeholder {
+  visibility: hidden !important;
 }
