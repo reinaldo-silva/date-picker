@@ -1,5 +1,5 @@
 {
-  "version": "0.1.6",
+  "version": "0.1.7",
   "license": "ISC",
   "name": "@reinaldo-silva/date-picker",
   "author": "Reinaldo Silva",
@@ -8,7 +8,7 @@
   "typings": "dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/reinaldo-silva/dev-box.git"
+    "url": "https://github.com/reinaldo-silva/date-picker.git"
   },
   "private": false,
   "files": [
