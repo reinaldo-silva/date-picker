@@ -11,8 +11,10 @@ export function ScrollContent({ children, isSelected }: ScrollContentProps) {
   useEffect(() => {
     if (typeof document !== 'undefined') {
       const text = document.getElementById(isSelected);
-      const [_, id] = isSelected.split('-');
-      ref.current?.scrollTo({ top: (text?.offsetHeight ?? 1) * Number(id) });
+      const [, id] = isSelected.split('-');
+      if (ref.current && text) {
+        ref.current.scrollTo({ top: (text.offsetHeight ?? 1) * Number(id) });
+      }
     }
   }, [isSelected, ref]);
 

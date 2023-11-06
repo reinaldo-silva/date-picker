@@ -1,4 +1,3 @@
-'use client';
 import { Calendar } from './components/Calendar';
 import { Input } from './components/Input';
 import { TimerSelector } from './components/TimerSelector';

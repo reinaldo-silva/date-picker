@@ -1,4 +1,3 @@
-'use client';
 import { lastDayOfMonth, startOfMonth } from 'date-fns';
 import { motion } from 'framer-motion';
 import React from 'react';
