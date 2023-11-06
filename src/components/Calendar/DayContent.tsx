@@ -1,15 +1,11 @@
 import { lastDayOfMonth, startOfMonth } from 'date-fns';
 import { motion } from 'framer-motion';
 import React from 'react';
-import {
-  StringToDate,
-  compareDateWithoutTime,
-  formatDefaultDate,
-} from '../../utils/dateFns';
+import { StringToDate, compareDateWithoutTime } from '../../utils/dateFns';
 import { DayCalendarItem } from './DayItem';
 
 interface DayContentProps {
-  setSelectedDay: (value: string) => void;
+  setSelectedDay: (year: number, month: number, day: number) => void;
   selectedDay?: string;
   currentCalendarDate: Date;
   currentView: string;
@@ -68,7 +64,13 @@ export function DayContent({
                 ? compareDateWithoutTime(StringToDate(selectedDay), currentDate)
                 : false
             }
-            onClick={() => setSelectedDay(formatDefaultDate(currentDate))}
+            onClick={() =>
+              setSelectedDay(
+                currentCalendarDate.getFullYear(),
+                currentCalendarDate.getMonth(),
+                index + 1
+              )
+            }
             key={index + 1}
             day={index + 1}
           />

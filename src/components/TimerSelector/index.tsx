@@ -1,11 +1,10 @@
 import React, { useCallback } from 'react';
-import { formatDefaultTime } from '../../utils/dateFns';
 import { ScrollContent } from './ScrollTimeContent';
 import { ScrollItem } from './ScrollTimeItem';
 
 interface TimerSelectorProps {
   currentTime?: string;
-  setCurrentTime: (value: string) => void;
+  setCurrentTime: (hour: number, minutes: number) => void;
 }
 
 export function TimerSelector({
@@ -18,11 +17,7 @@ export function TimerSelector({
 
   const handleSetCurrentTime = useCallback(
     (newHour: number, newMinute: number) => {
-      const newTime = formatDefaultTime(
-        new Date(2023, 1, 1, newHour, newMinute)
-      );
-
-      setCurrentTime(newTime);
+      setCurrentTime(newHour, newMinute);
     },
     [setCurrentTime]
   );

@@ -1,138 +1,221 @@
-import { Calendar } from './components/Calendar';
-import { Input } from './components/Input';
-import { TimerSelector } from './components/TimerSelector';
-import { useHandleDateWithTime } from './hooks/useHandleDateWithTime';
-import { useOutsideClick } from './hooks/useOutsideClick';
-import { formatDefaultDate } from './utils/dateFns';
-import { isAfter } from 'date-fns';
+import clsx from 'clsx';
+import { isAfter, isValid } from 'date-fns';
 import { AnimatePresence, motion } from 'framer-motion';
 import React, {
   ChangeEvent,
+  ComponentProps,
   FocusEvent,
+  forwardRef,
   useCallback,
   useRef,
   useState,
 } from 'react';
+import { Calendar } from './components/Calendar';
+import { Input } from './components/Input';
+import { TimerSelector } from './components/TimerSelector';
+import { useOutsideClick } from './hooks/useOutsideClick';
+import { formatDate } from './utils/dateFns';
 
-export interface DatePickerProps {
-  setValue: (value: string) => void;
+interface IHandleSetDate {
+  year: number;
+  month: number;
+  day: number;
+  hour: number;
+  minutes: number;
 }
 
-export const DatePicker = ({ setValue }: DatePickerProps) => {
-  // Estado do Input de Data
-  const [currentSelectDate, setCurrentSelectDate] = useState('');
-  // Estado do Input de Horário
-  const [currentSelectTime, setCurrentSelectTime] = useState('');
+const acceptsTypes = ['datetime-local', 'time', 'date'];
 
-  // Estado do Modal Aberto/Fechado
-  const [pickerIsOpen, setPickerIsOpen] = useState(false);
-  const wrapperRef = useRef(null);
-  useOutsideClick(wrapperRef, () => setPickerIsOpen(false));
+export const DatePicker = forwardRef<HTMLInputElement, ComponentProps<'input'>>(
+  (
+    {
+      className,
+      onClick,
+      onChange,
+      onBlur,
+      onFocus,
+      value: nativeValue,
+      max = '9999-12-31',
+      min = '1950-01-01',
+      type = 'datetime',
+      ...rest
+    },
+    ref
+  ) => {
+    const verifyType = (): 'datetime-local' | 'time' | 'date' =>
+      (!acceptsTypes.includes(type) ? acceptsTypes[0] : type) as any;
 
-  // Resolver para gerar data com horário
-  useHandleDateWithTime(currentSelectDate, currentSelectTime, setValue);
+    // Estado do Modal Aberto/Fechado
+    const [pickerIsOpen, setPickerIsOpen] = useState(false);
+    const wrapperRef = useRef(null);
+    useOutsideClick(wrapperRef, () => setPickerIsOpen(false));
 
-  const handleValidateInput = useCallback(
-    (e: ChangeEvent<HTMLInputElement> | FocusEvent<HTMLInputElement>) => {
-      const { value, min } = e.target;
+    const [value, setValue] = useState('');
 
-      if (!value) {
-        setCurrentSelectDate(formatDefaultDate(new Date()));
-        return;
-      }
+    const handleValidateInput = useCallback(
+      (e: ChangeEvent<HTMLInputElement> | FocusEvent<HTMLInputElement>) => {
+        const { value, min } = e.target;
 
-      if (min) {
-        const [year] = value.split('-').map((e) => Number(e));
-        if (year > 999 && isAfter(new Date(min), new Date(value))) {
-          setCurrentSelectDate(min);
+        if (!value) {
+          setValue(formatDate({ date: new Date(), type: verifyType() }));
           return;
         }
+
+        if (min) {
+          if (!isValid(new Date(min))) {
+            setValue(formatDate({ date: new Date(), type: verifyType() }));
+
+            return;
+          }
+
+          const [year] = value.split('-').map((e) => Number(e));
+          if (year > 999 && isAfter(new Date(min), new Date(value))) {
+            const [year, month, day] = min.split('-').map((e) => Number(e));
+
+            setValue(
+              formatDate({
+                date: new Date(year, month - 1, day, 0, 0),
+                type: verifyType(),
+              })
+            );
+            return;
+          }
+        }
+
+        setValue(value);
+      },
+      []
+    );
+
+    const handleManualChangeDate = (action: 'clear' | 'today') => {
+      if (action === 'clear') {
+        setValue('');
       }
 
-      setCurrentSelectDate(value);
-    },
-    []
-  );
+      if (action === 'today') {
+        setValue(formatDate({ date: new Date(), type: verifyType() }));
+      }
+    };
 
-  const handleManualChangeDate = (action: 'clear' | 'today') => {
-    if (action === 'clear') {
-      setCurrentSelectDate('');
-      setCurrentSelectTime('');
-      setValue('');
-    }
+    const handleSetValueDate = ({
+      year,
+      month,
+      day,
+      hour,
+      minutes,
+    }: IHandleSetDate) => {
+      setValue(
+        formatDate({
+          date: new Date(year, month, day, hour, minutes),
+          type: verifyType(),
+        })
+      );
+    };
 
-    if (action === 'today') {
-      setCurrentSelectDate(formatDefaultDate(new Date()));
-      setCurrentSelectTime('00:00');
-    }
-  };
+    return (
+      <label className="relative flex gap-2" ref={wrapperRef}>
+        <Input.Content>
+          <input
+            ref={ref}
+            type={verifyType()}
+            className={clsx('cursor-pointer px-1 outline-none', className)}
+            onClick={(e) => {
+              e.preventDefault();
+              onClick && onClick(e);
+            }}
+            onFocus={(e) => {
+              e.preventDefault();
+              setPickerIsOpen(true);
+              onFocus && onFocus(e);
+            }}
+            onChange={(e) => {
+              handleValidateInput(e);
+              onChange && onChange(e);
+            }}
+            onBlur={(e) => {
+              handleValidateInput(e);
+              onBlur && onBlur(e);
+            }}
+            max={max}
+            min={min}
+            value={nativeValue ?? value}
+            {...rest}
+          />
+        </Input.Content>
 
-  return (
-    <label className="relative flex gap-2" ref={wrapperRef}>
-      <Input.Content>
-        <Input.Input
-          type="date"
-          onClick={(e) => e.preventDefault()}
-          onFocus={(e) => {
-            e.preventDefault();
-            setPickerIsOpen(true);
-          }}
-          value={currentSelectDate}
-          onChange={handleValidateInput}
-          onBlur={handleValidateInput}
-          max="9999-12-31"
-          min="1850-01-01"
-        />
-        <Input.Input
-          type="time"
-          onClick={(e) => e.preventDefault()}
-          onFocus={(e) => {
-            e.preventDefault();
-            setPickerIsOpen(true);
-          }}
-          value={currentSelectTime}
-          onChange={(e) => {
-            setCurrentSelectTime(e.target.value);
-          }}
-        />
-      </Input.Content>
+        <AnimatePresence>
+          {pickerIsOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -4 }}
+              className="absolute left-0 top-10 flex min-h-[360px] min-w-[450px] rounded-md border border-zinc-200 bg-white p-2 drop-shadow-sm"
+            >
+              <div className="flex flex-col">
+                <Calendar
+                  setSelectedDay={(year, month, day) => {
+                    const [hour, minutes] = formatDate({
+                      date: new Date(value),
+                      type: 'time',
+                    })
+                      .split(':')
+                      .map((e) => Number(e));
 
-      <AnimatePresence>
-        {pickerIsOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -4 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -4 }}
-            className="absolute left-0 top-10 flex min-h-[360px] min-w-[450px] rounded-md border border-zinc-200 bg-white p-2 drop-shadow-sm"
-          >
-            <div className="flex flex-col">
-              <Calendar
-                setSelectedDay={setCurrentSelectDate}
-                selectedDay={currentSelectDate}
-              />
-              <div className="flex justify-between px-4 py-2 text-sm font-medium text-indigo-400">
-                <button
-                  className="hover:underline"
-                  onClick={() => handleManualChangeDate('today')}
-                >
-                  Hoje
-                </button>
-                <button
-                  className="hover:underline"
-                  onClick={() => handleManualChangeDate('clear')}
-                >
-                  Limpar
-                </button>
+                    handleSetValueDate({
+                      year,
+                      month,
+                      day,
+                      hour: hour ?? 0,
+                      minutes: minutes ?? 0,
+                    });
+                  }}
+                  selectedDay={formatDate({
+                    date: new Date(value),
+                    type: 'date',
+                  })}
+                />
+                <div className="flex justify-between px-4 py-2 text-sm font-medium text-indigo-400">
+                  <button
+                    className="hover:underline"
+                    onClick={() => handleManualChangeDate('today')}
+                  >
+                    Hoje
+                  </button>
+                  <button
+                    className="hover:underline"
+                    onClick={() => handleManualChangeDate('clear')}
+                  >
+                    Limpar
+                  </button>
+                </div>
               </div>
-            </div>
 
-            <TimerSelector
-              currentTime={currentSelectTime}
-              setCurrentTime={setCurrentSelectTime}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </label>
-  );
-};
+              <TimerSelector
+                currentTime={formatDate({
+                  date: new Date(value),
+                  type: 'time',
+                })}
+                setCurrentTime={(hour, minutes) => {
+                  const [year, month, day] = formatDate({
+                    date: new Date(value),
+                    type: 'date',
+                  })
+                    .split('-')
+                    .map((e) => Number(e));
+
+                  handleSetValueDate({
+                    year,
+                    month: month - 1,
+                    day,
+                    hour,
+                    minutes,
+                  });
+                }}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </label>
+    );
+  }
+);

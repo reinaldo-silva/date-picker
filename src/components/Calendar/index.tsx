@@ -52,7 +52,7 @@ const configActions = [
 
 interface CalendarProps {
   selectedDay?: string;
-  setSelectedDay: (value: string) => void;
+  setSelectedDay: (year: number, month: number, day: number) => void;
 }
 
 export function Calendar({ selectedDay, setSelectedDay }: CalendarProps) {

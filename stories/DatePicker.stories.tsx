@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/react';
 import React from 'react';
-import { DatePicker, DatePickerProps } from '../src';
+import { DatePicker } from '../src';
 
 const meta: Meta = {
   title: 'Date Picker',
@@ -13,9 +13,9 @@ const meta: Meta = {
 
 export default meta;
 
-const Template = (args: DatePickerProps) => (
-  <DatePicker {...args} setValue={() => {}} />
-);
+const Template = () => {
+  return <DatePicker />;
+};
 
 export const Default = Template.bind({});
 
