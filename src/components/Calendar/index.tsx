@@ -1,10 +1,10 @@
-import { formatDefaultDate } from '../../utils/dateFns';
 import { add, sub } from 'date-fns';
+import { AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import React, { useCallback, useState } from 'react';
+import { formatDefaultDate } from '../../utils/dateFns';
 import { DayContent } from './DayContent';
 import { YearContent } from './YearContent';
-import { AnimatePresence } from 'framer-motion';
 
 const weekDays = [
   'Domingo',
@@ -33,7 +33,11 @@ const months = [
 
 const configActions = [
   {
-    currentView: 'days',
+    currentView: 'daysLeft',
+    view: ['month', 'year'],
+  },
+  {
+    currentView: 'daysRight',
     view: ['month', 'year'],
   },
   {
@@ -139,7 +143,6 @@ export function Calendar({ selectedDay, setSelectedDay }: CalendarProps) {
           )}
         </header>
       )}
-
       <div className="flex w-full justify-between px-2">
         {weekDays.map((day, index) => (
           <span
@@ -150,7 +153,6 @@ export function Calendar({ selectedDay, setSelectedDay }: CalendarProps) {
           </span>
         ))}
       </div>
-
       {['daysLeft', 'daysRight'].includes(currentView) && (
         <div className="overflow-hidden">
           <AnimatePresence initial={false}>
@@ -163,7 +165,6 @@ export function Calendar({ selectedDay, setSelectedDay }: CalendarProps) {
           </AnimatePresence>
         </div>
       )}
-
       {currentView === 'months' && (
         <div className="grid h-[200px] grid-cols-2">
           {months.map((month, index) => (
