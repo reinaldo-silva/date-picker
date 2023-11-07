@@ -114,35 +114,33 @@ export const DatePicker = forwardRef<HTMLInputElement, ComponentProps<'input'>>(
     };
 
     return (
-      <label className="relative flex gap-2" ref={wrapperRef}>
-        <Input.Content>
-          <input
-            ref={ref}
-            type={verifyType()}
-            className={clsx('cursor-pointer px-1 outline-none', className)}
-            onClick={(e) => {
-              e.preventDefault();
-              onClick && onClick(e);
-            }}
-            onFocus={(e) => {
-              e.preventDefault();
-              setPickerIsOpen(true);
-              onFocus && onFocus(e);
-            }}
-            onChange={(e) => {
-              handleValidateInput(e);
-              onChange && onChange(e);
-            }}
-            onBlur={(e) => {
-              handleValidateInput(e);
-              onBlur && onBlur(e);
-            }}
-            max={max}
-            min={min}
-            value={nativeValue ?? value}
-            {...rest}
-          />
-        </Input.Content>
+      <Input.Content ref={wrapperRef}>
+        <input
+          ref={ref}
+          type={verifyType()}
+          className={clsx('cursor-pointer px-1 outline-none', className)}
+          onClick={(e) => {
+            e.preventDefault();
+            onClick && onClick(e);
+          }}
+          onFocus={(e) => {
+            e.preventDefault();
+            setPickerIsOpen(true);
+            onFocus && onFocus(e);
+          }}
+          onChange={(e) => {
+            handleValidateInput(e);
+            onChange && onChange(e);
+          }}
+          onBlur={(e) => {
+            handleValidateInput(e);
+            onBlur && onBlur(e);
+          }}
+          max={max}
+          min={min}
+          value={nativeValue ?? value}
+          {...rest}
+        />
 
         <AnimatePresence>
           {pickerIsOpen && (
@@ -216,7 +214,7 @@ export const DatePicker = forwardRef<HTMLInputElement, ComponentProps<'input'>>(
             </motion.div>
           )}
         </AnimatePresence>
-      </label>
+      </Input.Content>
     );
   }
 );
