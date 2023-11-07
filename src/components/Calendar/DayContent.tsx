@@ -40,7 +40,7 @@ export function DayContent({
       transition={{ ease: 'easeInOut', duration: 0.15 }}
       id={String(currentCalendarDate.getMonth() + 1)}
       key={String(currentCalendarDate.getMonth() + 1)}
-      className="grid flex-1 grid-cols-7 gap-1 px-2"
+      className="grid flex-1 grid-cols-7 gap-3 px-2"
     >
       {Array.from({
         length: startOfMonth(currentCalendarDate).getDay(),

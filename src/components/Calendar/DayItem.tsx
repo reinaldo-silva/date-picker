@@ -18,7 +18,7 @@ export const DayCalendarItem = ({
     <button
       onClick={() => onClick && onClick()}
       className={clsx(
-        'flex h-9 w-9 cursor-pointer items-center justify-center',
+        'flex h-8 w-8 cursor-pointer items-center justify-center',
         {
           '!cursor-default': !day,
         }
