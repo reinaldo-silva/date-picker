@@ -10,7 +10,6 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import '../tailwind.css';
 
 import { Calendar } from './components/Calendar';
 import { Input } from './components/Input';

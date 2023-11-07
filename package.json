@@ -1,5 +1,5 @@
 {
-  "version": "0.1.9",
+  "version": "0.1.11",
   "license": "ISC",
   "name": "@reinaldo-silva/date-picker",
   "author": "Reinaldo Silva",
@@ -30,7 +30,7 @@
     "analyze": "size-limit --why",
     "storybook": "storybook dev",
     "build-storybook": "storybook build",
-    "build-tailwind": "npx tailwindcss -o ./dist/styles.css --minify"
+    "build-tailwind": "npx tailwindcss -i ./tailwind.css -o ./dist/styles.css --minify"
   },
   "peerDependencies": {
     "clsx": "^2.0.0",
