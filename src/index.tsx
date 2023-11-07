@@ -10,6 +10,8 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import '../tailwind.css';
+
 import { Calendar } from './components/Calendar';
 import { Input } from './components/Input';
 import { TimerSelector } from './components/TimerSelector';
@@ -149,7 +151,7 @@ export const DatePicker = forwardRef<HTMLInputElement, ComponentProps<'input'>>(
               initial={{ opacity: 0, y: -4 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -4 }}
-              className="absolute left-0 top-10 flex min-h-[360px] min-w-[450px] rounded-md border border-zinc-200 bg-white p-2 drop-shadow-sm"
+              className="absolute z-40 left-0 top-10 flex min-h-[360px] min-w-[450px] rounded-md border border-zinc-200 bg-white p-2 drop-shadow-sm"
             >
               <div className="flex flex-col">
                 <Calendar
