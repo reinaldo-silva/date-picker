@@ -114,11 +114,11 @@ export const DatePicker = forwardRef<HTMLInputElement, ComponentProps<'input'>>(
     };
 
     return (
-      <Input.Content ref={wrapperRef}>
+      <Input.Content ref={wrapperRef} className='w-full'>
         <input
           ref={ref}
           type={verifyType()}
-          className={clsx('cursor-pointer px-1 outline-none', className)}
+          className={clsx('cursor-pointer px-1 outline-none flex-1', className)}
           onClick={(e) => {
             e.preventDefault();
             onClick && onClick(e);
